@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-#
+# 
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -31,7 +31,6 @@ class Gridworld(mdp.MarkovDecisionProcess):
         # parameters
         self.livingReward = 0.0
         self.noise = 0.2
-        # self.noise = 0
 
     def setLivingReward(self, reward):
         """
@@ -64,12 +63,6 @@ class Gridworld(mdp.MarkovDecisionProcess):
         if type(self.grid[x][y]) == int:
             return ('exit',)
         return ('north','west','south','east')
-
-    def get4Actions(self, state):
-        actions_list = list(self.getPossibleActions(state))
-        if len(actions_list) == 1:
-            actions_list = [actions_list[0] for _ in range(4)]
-        return actions_list
 
     def getStates(self):
         """
@@ -105,7 +98,7 @@ class Gridworld(mdp.MarkovDecisionProcess):
             for y in range(self.grid.height):
                 if self.grid[x][y] == 'S':
                     return (x, y)
-        raise Exception('Grid has no start state')
+        raise 'Grid has no start state'
 
     def isTerminal(self, state):
         """
@@ -127,7 +120,7 @@ class Gridworld(mdp.MarkovDecisionProcess):
         """
 
         if action not in self.getPossibleActions(state):
-            raise Exception("Illegal action!")
+            raise "Illegal action!"
 
         if self.isTerminal(state):
             return []
@@ -212,11 +205,11 @@ class GridworldEnvironment(environment.Environment):
         for nextState, prob in successors:
             sum += prob
             if sum > 1.0:
-                raise Exception('Total transition probability more than one; sample failure.')
+                raise 'Total transition probability more than one; sample failure.'
             if rand < sum:
                 reward = self.gridWorld.getReward(state, action, nextState)
                 return (nextState, reward)
-        raise Exception('Total transition probability less than one; sample failure.')
+        raise 'Total transition probability less than one; sample failure.'
 
     def reset(self):
         self.state = self.gridWorld.getStartState()
@@ -366,7 +359,7 @@ def runEpisode(agent, environment, discount, decision, display, message, pause, 
         # GET ACTION (USUALLY FROM AGENT)
         action = decision(state)
         if action == None:
-            raise Exception('Error: Agent returned None action')
+            raise 'Error: Agent returned None action'
 
         # EXECUTE ACTION
         nextState, reward = environment.doAction(action)
@@ -415,7 +408,7 @@ def parseOptions():
                          help='Request a window width of X pixels *per grid cell* (default %default)')
     optParser.add_option('-a', '--agent',action='store', metavar="A",
                          type='string',dest='agent',default="random",
-                         help='Agent type (options are \'random\', \'value\', \'q\', and \'learn\', default %default)')
+                         help='Agent type (options are \'random\', \'value\' and \'q\', default %default)')
     optParser.add_option('-t', '--text',action='store_true',
                          dest='textDisplay',default=False,
                          help='Use text-only ASCII display')
@@ -436,7 +429,7 @@ def parseOptions():
 
     opts, args = optParser.parse_args()
 
-    if opts.manual and (opts.agent != 'q' and opts.agent != 'learn'):
+    if opts.manual and opts.agent != 'q':
         print('## Disabling Agents in Manual Mode (-m) ##')
         opts.agent = None
 
@@ -490,15 +483,6 @@ if __name__ == '__main__':
     a = None
     if opts.agent == 'value':
         a = valueIterationAgents.ValueIterationAgent(mdp, opts.discount, opts.iters)
-    elif opts.agent == 'learn':
-        print("HERE")
-        gridWorldEnv = GridworldEnvironment(mdp)
-        actionFn = lambda state: mdp.getPossibleActions(state)
-        qLearnOpts = {'gamma': opts.discount,
-                      'alpha': opts.learningRate,
-                      'epsilon': opts.epsilon,
-                      'actionFn': actionFn}
-        a = qlearningAgents.LearnedQAgent(gridWorldEnv.gridWorld, **qLearnOpts)
     elif opts.agent == 'q':
         #env.getPossibleActions, opts.discount, opts.learningRate, opts.epsilon
         #simulationFn = lambda agent, state: simulation.GridworldSimulation(agent,state,mdp)
@@ -539,7 +523,7 @@ if __name__ == '__main__':
     ###########################
     # DISPLAY Q/V VALUES BEFORE SIMULATION OF EPISODES
     try:
-        if not opts.manual and opts.agent in ('value', 'asynchvalue', 'priosweepvalue', 'learn'):
+        if not opts.manual and opts.agent in ('value', 'asynchvalue', 'priosweepvalue'):
             if opts.valueSteps:
                 for i in range(opts.iters):
                     tempAgent = valueIterationAgents.ValueIterationAgent(mdp, opts.discount, i)

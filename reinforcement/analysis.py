@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-#
+# 
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -19,54 +19,58 @@
 # Set the given parameters to obtain the specified policies through
 # value iteration.
 
-def question2a():
-    """
-      Prefer the close exit (+1), risking the cliff (-10).
-    """
-    answerDiscount = None
-    answerNoise = None
-    answerLivingReward = None
+def question2():
+    answerDiscount = 0.9
+    answerNoise = 0.001
+    return answerDiscount, answerNoise
+
+def question3a():
+    answerDiscount = 0.2
+    answerNoise = 0.001
+    answerLivingReward = 0.01
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
-def question2b():
-    """
-      Prefer the close exit (+1), but avoiding the cliff (-10).
-    """
-    answerDiscount = None
-    answerNoise = None
-    answerLivingReward = None
+def question3b():
+    answerDiscount = 0.1
+    answerNoise = 0.001
+    answerLivingReward = 0.8
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
-def question2c():
-    """
-      Prefer the distant exit (+10), risking the cliff (-10).
-    """
-    answerDiscount = None
-    answerNoise = None
-    answerLivingReward = None
+def question3c():
+    answerDiscount = 0.9
+    answerNoise = 0.001
+    answerLivingReward = 0.01
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
-def question2d():
-    """
-      Prefer the distant exit (+10), avoiding the cliff (-10).
-    """
-    answerDiscount = None
-    answerNoise = None
-    answerLivingReward = None
+def question3d():
+    answerDiscount = 0.9
+    answerNoise = 0.02
+    answerLivingReward = 0.8
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
-def question2e():
-    """
-      Avoid both exits and the cliff (so an episode should never terminate).
-    """
-    answerDiscount = None
-    answerNoise = None
-    answerLivingReward = None
+def question3e():
+    # Discount could be 1 or 0; but 0 results in: if some states are reached,
+    # then the optimal move from that state is the terminal state.
+    # Where as when using 1, none of the state will have the optimal
+    # move to the terminal state.
+    answerDiscount = 1
+    answerNoise = 0.2
+    answerLivingReward = 0.9
     return answerDiscount, answerNoise, answerLivingReward
+    # If not possible, return 'NOT POSSIBLE'
+
+def question8():
+    answerEpsilon = 0.8
+    answerLearningRate = 0.4  
+    # comes about 2 steps close to reaching the other end but
+    # still leans towards the safe option
+    return 'NOT POSSIBLE'
+    
+    #return answerEpsilon, answerLearningRate
     # If not possible, return 'NOT POSSIBLE'
 
 if __name__ == '__main__':

@@ -32,7 +32,6 @@ import inspect
 import heapq
 import random
 import io
-import functools
 
 class Experiences(object):
     def __init__(self, test_name):
@@ -357,7 +356,7 @@ class Counter(dict):
         sortedItems = list(self.items())
 
         def compare(x, y): return sign(y[1] - x[1])
-        sortedItems.sort(key=functools.cmp_to_key(compare))
+        sortedItems.sort(cmp=compare)
         return [x[0] for x in sortedItems]
 
     def totalCount(self):

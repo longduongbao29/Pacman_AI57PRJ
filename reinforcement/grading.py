@@ -14,13 +14,13 @@
 
 "Common code for autograders"
 
-import html
 import time
 import sys
 import json
 import traceback
 from collections import defaultdict
 import util
+import html
 
 
 class Grades:
